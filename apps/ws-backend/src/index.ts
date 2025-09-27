@@ -33,21 +33,21 @@ function checkUser(token:string):string | null{
 }
 
 wss.on('connection',function connection(ws,request){
-    console.log("hi");
+    // console.log("hi");
     const url=request.url;
     if(!url){
         return;
     }
-    console.log("url found " + url);
+    // console.log("url found " + url);
     const queryParams=new URLSearchParams(url.split('?')[1]);
-    console.log(queryParams);
-    console.log();
+    // console.log(queryParams);
+    // console.log();
     const token=queryParams.get('token') ?? "";
-    console.log(token);
-    console.log();
+    // console.log(token);
+    // console.log();
     const userId=checkUser(token);
-    console.log(userId);
-    console.log("passed");
+    // console.log(userId);
+    // console.log("passed");
     if(userId==null){
         ws.close();
         return null;
@@ -88,17 +88,18 @@ wss.on('connection',function connection(ws,request){
 
             await prismaClient.chat.create({
                 data:{
-                    roomId,
+                    roomId:Number(roomId),
+                    
                     message,
                     userId
                 }
-            })
+            });
 
             users.forEach(user=>{
                 if(user.rooms.includes(roomId)){
                     user.ws.send(JSON.stringify({
                         type:"chat",
-                        message:message,
+                        message,
                         roomId
                     }))
                 }
