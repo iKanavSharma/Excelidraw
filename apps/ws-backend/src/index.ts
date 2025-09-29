@@ -16,7 +16,7 @@ const users:User[]=[];
 function checkUser(token:string):string | null{
     try{
         const decoded=jwt.verify(token,JWT_SECRET)
-
+        console.log(decoded);
         if(typeof decoded=="string"){
             return null;
         }
@@ -62,8 +62,14 @@ wss.on('connection',function connection(ws,request){
 
     ws.on('message',async function message(data){
         //type check for data
+        let parsedData;
+        if(typeof data!=="string"){
+            parsedData=JSON.parse(data.toString());
+        }else{
+            parsedData=JSON.parse(data);
+        }
         
-        const parsedData=JSON.parse(data as unknown as string);//{type:"join-room ,roomId:1"}
+        
         //if message is join room find the user in global user array and to that rooms [] push room id
         if(parsedData.type==="join_room"){
             const user=users.find(x=>x.ws===ws);
@@ -89,7 +95,6 @@ wss.on('connection',function connection(ws,request){
             await prismaClient.chat.create({
                 data:{
                     roomId:Number(roomId),
-                    
                     message,
                     userId
                 }
