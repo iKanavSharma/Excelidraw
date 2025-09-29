@@ -13,7 +13,7 @@ async function getRoomId(slug:string){
 
 
 //slug->room name
-export default async function ChatRoom1({
+export default async function({
     params
 }: {
     params:{
@@ -26,5 +26,8 @@ export default async function ChatRoom1({
     const roomId=await getRoomId(slug);
     console.log(roomId);
     //acess to chat romm
-    return <ChatRoom id={roomId}></ChatRoom> 
+    // return <ChatRoom id={roomId}></ChatRoom> 
+    return <div>
+        
+        </div>
 }
