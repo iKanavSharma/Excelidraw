@@ -105,7 +105,7 @@ export class Game {
   }
 
   private drawPencil(points: { x: number; y: number }[]) {
-    if (points.length < 2) return;
+    if (!points || points.length < 2) return;
 
     this.ctx.beginPath();
     this.ctx.lineCap = "round";
