@@ -36,7 +36,7 @@ export default function Signin(){
                         }
                     })
                     //roomid 
-                    const roomId=room.data.id;
+                    const roomId=room.data.roomId;
                     navigation.push(`/canvas/${roomId}`);
                 }}>
                 Sign In
